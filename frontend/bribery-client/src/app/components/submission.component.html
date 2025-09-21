@@ -1,0 +1,44 @@
+<section class="submission" *ngIf="game && identity">
+  <header>
+    <h2>Craft your bribes</h2>
+    <p>Round {{ game.currentRound }} of {{ game.settings.totalRounds }}</p>
+  </header>
+
+  <div class="targets" *ngIf="assignments.length; else waiting">
+    <article *ngFor="let targetId of assignments" class="card">
+      <div class="target-header">
+        <h3>Bribe {{ playerName(targetId) }}</h3>
+        <p class="prompt">{{ promptText(targetId) }}</p>
+      </div>
+
+      <div class="mode-switch">
+        <button type="button" [class.active]="isTextMode(targetId)" (click)="switchMode(targetId, 'text')">
+          Text bribe
+        </button>
+        <button type="button" [class.active]="isImageMode(targetId)" (click)="switchMode(targetId, 'image')">
+          Image URL
+        </button>
+      </div>
+
+      <textarea
+        *ngIf="isTextMode(targetId)"
+        [(ngModel)]="draftFor(targetId).text"
+        placeholder="Promise something irresistible..."
+      ></textarea>
+      <input
+        *ngIf="isImageMode(targetId)"
+        type="url"
+        [(ngModel)]="draftFor(targetId).image"
+        placeholder="Paste an image or GIF URL"
+      />
+
+      <button type="button" class="primary" [disabled]="isSubmitted(targetId)" (click)="submitBribe(targetId)">
+        {{ isSubmitted(targetId) ? 'Submitted' : 'Submit bribe' }}
+      </button>
+    </article>
+  </div>
+
+  <ng-template #waiting>
+    <p class="waiting">Waiting for assignments...</p>
+  </ng-template>
+</section>

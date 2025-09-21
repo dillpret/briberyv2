@@ -1,0 +1,75 @@
+.player-panel {
+  background: #f5f7ff;
+  border-radius: 16px;
+  padding: 1rem;
+}
+
+.player-panel h3 {
+  margin: 0 0 0.75rem;
+  font-size: 1.1rem;
+}
+
+.player-panel ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+.player-panel li {
+  display: grid;
+  grid-template-columns: 1fr auto auto;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.5rem 0.75rem;
+  border-radius: 12px;
+  background: #fff;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
+}
+
+.player-panel li.current {
+  border: 1px solid #5b6cff;
+}
+
+.info {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  align-items: center;
+}
+
+.name {
+  font-weight: 600;
+}
+
+.badge {
+  background: #5b6cff;
+  color: #fff;
+  border-radius: 999px;
+  padding: 0.15rem 0.6rem;
+  font-size: 0.75rem;
+}
+
+.badge.waiting {
+  background: #ffb347;
+}
+
+.badge.disconnected {
+  background: #d04141;
+}
+
+.score {
+  font-variant-numeric: tabular-nums;
+  font-weight: 600;
+}
+
+.kick {
+  border: none;
+  background: #ffe2e2;
+  color: #b30021;
+  padding: 0.4rem 0.7rem;
+  border-radius: 999px;
+  cursor: pointer;
+}

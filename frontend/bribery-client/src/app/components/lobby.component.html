@@ -1,0 +1,68 @@
+<section class="lobby" *ngIf="game && identity">
+  <header class="lobby__header">
+    <div>
+      <h2>Lobby</h2>
+      <p>Share this code with your friends:</p>
+      <div class="code">
+        <strong>{{ game.code }}</strong>
+        <button type="button" (click)="copyCode()">{{ copied ? 'Copied!' : 'Copy' }}</button>
+      </div>
+      <p class="small">Join link: {{ location.origin }}/#{{ game.code }}</p>
+    </div>
+    <div class="cta">
+      <button type="button" class="primary" [disabled]="!canStart()" (click)="onStart()">Start game</button>
+    </div>
+  </header>
+
+  <div class="layout">
+    <app-player-panel
+      [players]="game.players"
+      [currentPlayerId]="identity.playerId"
+      [canKick]="identity.isHost"
+      (kickPlayer)="kickPlayer.emit($event)"
+    ></app-player-panel>
+
+    <form class="settings" *ngIf="identity.isHost" [formGroup]="settingsForm" (ngSubmit)="onSaveSettings()">
+      <h3>Game settings</h3>
+      <div class="grid">
+        <label>
+          Rounds
+          <input type="number" formControlName="totalRounds" min="1" max="100" />
+        </label>
+        <label>
+          Prompt timer
+          <input type="number" formControlName="promptSelectionTimerSeconds" min="0" max="600" />
+        </label>
+        <label>
+          Submission timer
+          <input type="number" formControlName="submissionTimerSeconds" min="0" max="600" />
+        </label>
+        <label>
+          Voting timer
+          <input type="number" formControlName="votingTimerSeconds" min="0" max="600" />
+        </label>
+        <label>
+          Results timer
+          <input type="number" formControlName="resultsTimerSeconds" min="0" max="600" />
+        </label>
+      </div>
+      <label class="toggle">
+        <input type="checkbox" formControlName="customPromptsEnabled" />
+        Enable custom prompts
+      </label>
+      <button type="submit" class="secondary">Save settings</button>
+    </form>
+
+    <div class="settings" *ngIf="!identity.isHost">
+      <h3>Game settings</h3>
+      <ul>
+        <li><strong>Rounds:</strong> {{ game.settings.totalRounds }}</li>
+        <li><strong>Prompt timer:</strong> {{ game.settings.promptSelectionTimerSeconds }}s</li>
+        <li><strong>Submission timer:</strong> {{ game.settings.submissionTimerSeconds }}s</li>
+        <li><strong>Voting timer:</strong> {{ game.settings.votingTimerSeconds }}s</li>
+        <li><strong>Results timer:</strong> {{ game.settings.resultsTimerSeconds }}s</li>
+        <li><strong>Custom prompts:</strong> {{ game.settings.customPromptsEnabled ? 'On' : 'Off' }}</li>
+      </ul>
+    </div>
+  </div>
+</section>

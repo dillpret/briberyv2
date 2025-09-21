@@ -1,0 +1,39 @@
+<section class="scoreboard" *ngIf="game && latestSummary">
+  <header>
+    <h2>Round {{ latestSummary.roundNumber }} results</h2>
+    <p>Scores are cumulative across rounds.</p>
+  </header>
+
+  <div class="grid">
+    <div class="card">
+      <h3>Leaderboard</h3>
+      <ol>
+        <li *ngFor="let entry of latestSummary.scoreboard">
+          <span class="name">{{ playerName(entry.playerId) }}</span>
+          <span class="points">+{{ entry.roundPoints | number: '1.1-1' }} ({{ entry.totalScore | number: '1.1-1' }})</span>
+        </li>
+      </ol>
+    </div>
+
+    <div class="card">
+      <h3>Winning bribes</h3>
+      <ul>
+        <li *ngFor="let result of latestSummary.promptResults">
+          <strong>{{ playerName(result.targetPlayerId) }}:</strong>
+          {{ result.prompt }} — won by
+          {{ playerName(result.winningPlayerId) }}
+          <span *ngIf="result.wasRandom">(random)</span>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <button
+    type="button"
+    class="primary"
+    *ngIf="identity?.isHost"
+    (click)="onAdvance()"
+  >
+    Continue
+  </button>
+</section>

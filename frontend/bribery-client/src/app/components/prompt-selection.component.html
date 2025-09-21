@@ -1,0 +1,37 @@
+<section class="prompt" *ngIf="game && identity">
+  <h2>Choose a prompt for players bribing you</h2>
+  <p class="info">Round {{ game.currentRound }} of {{ game.settings.totalRounds }}</p>
+
+  <div class="modes">
+    <button type="button" [class.active]="mode === 'library'" (click)="chooseMode('library')">Library prompt</button>
+    <button type="button" [class.active]="mode === 'custom'" (click)="chooseMode('custom')">Custom prompt</button>
+  </div>
+
+  <div class="card" *ngIf="mode === 'library'">
+    <label>
+      Prompt from the library
+      <select [(ngModel)]="selectedLibraryPrompt">
+        <option value="" disabled selected>Select a prompt</option>
+        <option *ngFor="let prompt of libraryPrompts" [value]="prompt">{{ prompt }}</option>
+      </select>
+    </label>
+  </div>
+
+  <div class="card" *ngIf="mode === 'custom'">
+    <label>
+      Write your own prompt
+      <textarea [(ngModel)]="customPrompt" maxlength="200" placeholder="Convince me to..."></textarea>
+    </label>
+    <small>{{ customPrompt.length }}/200 characters</small>
+  </div>
+
+  <button class="primary" type="button" [disabled]="hasSubmitted" (click)="submitPrompt()">
+    {{ hasSubmitted ? 'Prompt submitted' : 'Confirm prompt' }}
+  </button>
+  <p class="message" *ngIf="message">{{ message }}</p>
+
+  <section class="pending" *ngIf="pendingPlayers.length">
+    <h3>Waiting for:</h3>
+    <p>{{ pendingPlayers.length }} player(s) still choosing prompts.</p>
+  </section>
+</section>

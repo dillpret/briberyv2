@@ -1,0 +1,12 @@
+<section class="finished" *ngIf="game">
+  <h2>Game complete!</h2>
+  <p>Thanks for playing Bribery. Final standings:</p>
+  <ol>
+    <li *ngFor="let player of finalScores; let i = index" [class.podium]="i < 3">
+      <span class="position">#{{ i + 1 }}</span>
+      <span class="name">{{ player.name }}</span>
+      <span class="score">{{ player.score | number: '1.1-1' }} pts</span>
+    </li>
+  </ol>
+  <p class="hint">Hosts can create a new lobby from the landing page to play again.</p>
+</section>

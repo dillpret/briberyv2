@@ -1,0 +1,66 @@
+<main class="app">
+  <ng-container *ngIf="(game$ | async) as game; else landing">
+    <ng-container *ngIf="game; else landing">
+      <ng-container *ngIf="(player$ | async) as identity">
+        <header class="game-header">
+          <div>
+            <h1>Bribery</h1>
+            <p class="phase">Current phase: {{ phaseLabel(game) }}</p>
+          </div>
+          <div class="status">
+            <div class="code">Code: <span>{{ game.code }}</span></div>
+            <div *ngIf="remainingTime(game) as timer" class="timer">Timer: {{ timer }}</div>
+          </div>
+        </header>
+
+        <section class="game-body">
+          <ng-container [ngSwitch]="game.phase">
+            <app-lobby
+              *ngSwitchCase="'Lobby'"
+              [game]="game"
+              [identity]="identity"
+              (startGame)="handleStartGame()"
+              (updateSettings)="handleSettingsUpdate($event)"
+              (kickPlayer)="handleKick($event)"
+            ></app-lobby>
+
+            <app-prompt-selection
+              *ngSwitchCase="'PromptSelection'"
+              [game]="game"
+              [identity]="identity"
+              [libraryPrompts]="libraryPrompts"
+              (confirm)="handlePromptConfirm($event)"
+            ></app-prompt-selection>
+
+            <app-submission-phase
+              *ngSwitchCase="'Submission'"
+              [game]="game"
+              [identity]="identity"
+              (submit)="handleSubmitBribe($event)"
+            ></app-submission-phase>
+
+            <app-voting-phase
+              *ngSwitchCase="'Voting'"
+              [game]="game"
+              [identity]="identity"
+              (vote)="handleVote($event)"
+            ></app-voting-phase>
+
+            <app-scoreboard
+              *ngSwitchCase="'Scoreboard'"
+              [game]="game"
+              [identity]="identity"
+              (advance)="handleAdvance()"
+            ></app-scoreboard>
+
+            <app-finished *ngSwitchCase="'Finished'" [game]="game"></app-finished>
+          </ng-container>
+        </section>
+      </ng-container>
+    </ng-container>
+  </ng-container>
+</main>
+
+<ng-template #landing>
+  <app-landing></app-landing>
+</ng-template>
