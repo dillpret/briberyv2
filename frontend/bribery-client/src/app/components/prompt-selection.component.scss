@@ -1,0 +1,77 @@
+.prompt {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.info {
+  color: #5b6cff;
+  font-weight: 600;
+}
+
+.modes {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.modes button {
+  border: 1px solid #5b6cff;
+  background: #fff;
+  padding: 0.5rem 1rem;
+  border-radius: 999px;
+  cursor: pointer;
+  color: #5b6cff;
+}
+
+.modes button.active {
+  background: #5b6cff;
+  color: #fff;
+}
+
+.card {
+  background: #fff;
+  border-radius: 16px;
+  padding: 1.2rem;
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.08);
+}
+
+select,
+textarea {
+  width: 100%;
+  margin-top: 0.5rem;
+  border-radius: 12px;
+  border: 1px solid #ccd3ff;
+  padding: 0.6rem;
+  font-size: 1rem;
+}
+
+textarea {
+  min-height: 120px;
+  resize: vertical;
+}
+
+.primary {
+  align-self: flex-start;
+  background: linear-gradient(135deg, #6573ff, #8f62ff);
+  color: #fff;
+  border: none;
+  border-radius: 999px;
+  padding: 0.7rem 1.5rem;
+  cursor: pointer;
+}
+
+.primary:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.message {
+  color: #3949ab;
+  font-weight: 500;
+}
+
+.pending {
+  background: #f5f7ff;
+  border-radius: 12px;
+  padding: 1rem;
+}

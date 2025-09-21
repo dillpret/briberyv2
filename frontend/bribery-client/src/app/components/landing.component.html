@@ -1,0 +1,73 @@
+<section class="landing">
+  <header class="landing__header">
+    <h1>Bribery</h1>
+    <p class="tagline">A party game where the best bribe wins.</p>
+    <button type="button" class="link" (click)="toggleHowToPlay()">How to play</button>
+  </header>
+
+  <div class="panels">
+    <form [formGroup]="createForm" (ngSubmit)="createGame()" class="panel">
+      <h2>Host a new lobby</h2>
+      <label>
+        Display name
+        <input type="text" formControlName="hostName" placeholder="Captain Bribe" />
+      </label>
+      <div class="form-grid">
+        <label>
+          Rounds
+          <input type="number" formControlName="totalRounds" min="1" max="100" />
+        </label>
+        <label>
+          Prompt timer
+          <input type="number" formControlName="promptSelectionTimerSeconds" min="0" max="600" />
+        </label>
+        <label>
+          Submission timer
+          <input type="number" formControlName="submissionTimerSeconds" min="0" max="600" />
+        </label>
+        <label>
+          Voting timer
+          <input type="number" formControlName="votingTimerSeconds" min="0" max="600" />
+        </label>
+        <label>
+          Results timer
+          <input type="number" formControlName="resultsTimerSeconds" min="0" max="600" />
+        </label>
+      </div>
+      <label class="toggle">
+        <input type="checkbox" formControlName="customPromptsEnabled" />
+        Allow players to write their own prompts
+      </label>
+      <button type="submit" class="primary">Create lobby</button>
+      <p class="error" *ngIf="creationError">{{ creationError }}</p>
+    </form>
+
+    <form [formGroup]="joinForm" (ngSubmit)="joinGame()" class="panel">
+      <h2>Join an existing lobby</h2>
+      <label>
+        Game code
+        <input type="text" formControlName="code" placeholder="ABCD" maxlength="4" />
+      </label>
+      <label>
+        Display name
+        <input type="text" formControlName="name" placeholder="You" />
+      </label>
+      <button type="submit" class="primary">Join</button>
+      <p class="error" *ngIf="joinError">{{ joinError }}</p>
+    </form>
+  </div>
+
+  <section class="how-to" *ngIf="showHowToPlay">
+    <div class="how-to__content">
+      <h2>How to play</h2>
+      <ol>
+        <li>Everyone joins the lobby using the four-character game code.</li>
+        <li>The host starts the game once at least three players are ready.</li>
+        <li>Each round you create two bribes for different players.</li>
+        <li>The targeted player picks their favourite bribe to award points.</li>
+        <li>After the final round the scoreboard crowns the best briber.</li>
+      </ol>
+      <button type="button" class="secondary" (click)="toggleHowToPlay()">Close</button>
+    </div>
+  </section>
+</section>

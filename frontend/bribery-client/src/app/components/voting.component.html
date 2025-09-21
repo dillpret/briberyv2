@@ -1,0 +1,28 @@
+<section class="voting" *ngIf="game && identity">
+  <header>
+    <h2>Vote for the best bribe</h2>
+    <p>{{ bribes.length }} bribes to review</p>
+  </header>
+
+  <div class="bribe-list" *ngIf="bribes.length; else waiting">
+    <label *ngFor="let bribe of bribes" class="bribe-card" [class.selected]="selectedBribe === bribe.submittedBy">
+      <input type="radio" name="vote" [value]="bribe.submittedBy" [(ngModel)]="selectedBribe" />
+      <div>
+        <p *ngIf="bribe.content.type === 'Text'" class="text">{{ bribe.content.content }}</p>
+        <div *ngIf="bribe.content.type === 'Image'" class="image-wrapper">
+          <img [src]="bribe.content.content" alt="Bribe image" />
+        </div>
+        <p class="meta">Submitted by a secret admirer {{ bribe.isRandom ? '(random)' : '' }}</p>
+      </div>
+    </label>
+  </div>
+
+  <ng-template #waiting>
+    <p class="waiting">No bribes available yet.</p>
+  </ng-template>
+
+  <button type="button" class="primary" [disabled]="hasVoted" (click)="submitVote()">
+    {{ hasVoted ? 'Vote recorded' : 'Submit vote' }}
+  </button>
+  <p class="message" *ngIf="message">{{ message }}</p>
+</section>

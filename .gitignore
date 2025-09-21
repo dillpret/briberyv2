@@ -1,0 +1,17 @@
+# Build outputs
+bin/
+obj/
+
+# Visual Studio artifacts
+*.user
+*.suo
+*.userprefs
+
+# Node/Angular artifacts
+frontend/bribery-client/node_modules/
+frontend/bribery-client/dist/
+frontend/bribery-client/coverage/
+
+# Misc
+.DS_Store
+npm-debug.log*

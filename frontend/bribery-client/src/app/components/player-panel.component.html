@@ -1,0 +1,17 @@
+<section class="player-panel">
+  <h3>Players</h3>
+  <ul>
+    <li *ngFor="let player of players" [class.current]="player.id === currentPlayerId">
+      <div class="info">
+        <span class="name">{{ player.name }}</span>
+        <span class="badge" *ngIf="player.isHost">Host</span>
+        <span class="badge waiting" *ngIf="player.isWaiting">Waiting</span>
+        <span class="badge disconnected" *ngIf="!player.isConnected">Disconnected</span>
+      </div>
+      <div class="score">{{ player.score | number: '1.1-1' }}</div>
+      <button *ngIf="canKick && !player.isHost" type="button" class="kick" (click)="onKick(player.id)">
+        Kick
+      </button>
+    </li>
+  </ul>
+</section>
